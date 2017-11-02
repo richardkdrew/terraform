@@ -13,7 +13,6 @@ provider "aws" {
 resource "aws_s3_bucket" "terraform_state_bucket" {
   provider  = "aws.${var.region}"
   bucket    = "${var.bucket_name}"
-  policy    = "${data.template_file.website_bucket_policy.rendered}"
 
   versioning {
     enabled = true
