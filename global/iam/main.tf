@@ -22,7 +22,7 @@ resource "aws_iam_policy" "deployer_policy" {
   provider    = "aws.${var.region}"
   name        = "${var.bucket_name}.deployer-policy"
   path        = "/"
-  description = "Policy allowing the publish of new version(s) of the website to the S3 bucket"
+  description = "Policy allowing the publish of new version(s) of the contents to the S3 bucket"
   policy      = "${data.template_file.deployer_role_policy.rendered}"
 }
 

@@ -9,6 +9,11 @@ variable domain {
   description = "The domain name for the website being hosted, e.g. example.com"
 }
 
+variable default_root_object {
+  default = ""
+  description = "The default object to show, e.g. index.html"
+}
+
 variable duplicate_content_penalty_secret {
   description = "Secret/password used to restrict access to S3 to CloudFront"
 }

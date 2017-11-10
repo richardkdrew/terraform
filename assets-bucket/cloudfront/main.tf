@@ -33,29 +33,9 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
-  # By default, show index.html file
-  default_root_object = "index.html"
-
-  # If there is a 404, return index.html with a HTTP 200 Response
-  custom_error_response {
-    error_code            = "404"
-    error_caching_min_ttl = "360"
-    response_code         = "200"
-    response_page_path    = "${var.not_found_response_path}"
-  }
-
   "default_cache_behavior" {
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
-
-    # Forward (to origin) settings
-    "forwarded_values" {
-      query_string = "${var.forward_query_string}"
-
-      cookies {
-        forward = "none"
-      }
-    }
 
     min_ttl          = "0"
     default_ttl      = "300"  //3600
@@ -82,8 +62,6 @@ resource "aws_cloudfront_distribution" "cdn" {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2018"
   }
-
-  aliases = "${var.aliases}"
 
   tags = "${merge("${var.tags}",map("Name", "${var.project}-${var.domain}", "Environment", "${var.environment}", "Project", "${var.project}"))}"
 }
