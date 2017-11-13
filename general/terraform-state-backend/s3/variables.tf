@@ -17,7 +17,7 @@ variable region {
 }
 
 variable tags {
-  default     = { "S3 Terraform Remote State Storage"}
+  default     = {}
   description = "Optional Tags"
   type        = "map"
 }
