@@ -12,7 +12,7 @@ provider "aws" {
 ################################################################################################################
 resource "aws_s3_bucket" "terraform_state_storage_bucket" {
   provider  = "aws.${var.region}"
-  bucket    = "${var.bucket_name}"
+  bucket    = "${var.bucket_name}-terraform-remote-state-storage"
 
   versioning {
     enabled = true
