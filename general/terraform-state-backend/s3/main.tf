@@ -10,7 +10,7 @@ provider "aws" {
 ################################################################################################################
 ## Configure the bucket
 ################################################################################################################
-resource "aws_s3_bucket" "terraform_state_bucket" {
+resource "aws_s3_bucket" "terraform_state_storage_bucket" {
   provider  = "aws.${var.region}"
   bucket    = "${var.bucket_name}"
 
@@ -22,5 +22,5 @@ resource "aws_s3_bucket" "terraform_state_bucket" {
     prevent_destroy = true
   }
 
-  tags = "${merge("${var.tags}",map("Name", "${var.project}-${var.bucket_name}", "Environment", "${var.environment}", "Project", "${var.project}"))}"
+  tags = "${merge("${var.tags}",map("Name", "${var.project}-${var.bucket_name}", "Project", "${var.project}"))}"
 }
