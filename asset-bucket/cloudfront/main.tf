@@ -2,19 +2,18 @@
 ## Configure the AWS provider for the specific region
 ################################################################################################################
 provider "aws" {
-  alias = "${var.region}"
+  alias  = "${var.region}"
   region = "${var.region}"
 }
-
 
 ################################################################################################################
 ## Create a Cloudfront distribution for the static website
 ################################################################################################################
 resource "aws_cloudfront_distribution" "cdn" {
-  provider      = "aws.${var.region}"
-  enabled       = true
-  price_class   = "PriceClass_All"
-  http_version  = "http1.1"
+  provider     = "aws.${var.region}"
+  enabled      = true
+  price_class  = "PriceClass_All"
+  http_version = "http1.1"
 
   "origin" {
     origin_id   = "origin-bucket-${var.domain}"
@@ -37,9 +36,9 @@ resource "aws_cloudfront_distribution" "cdn" {
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
 
-    min_ttl          = "0"
-    default_ttl      = "300"  //3600
-    max_ttl          = "1200" //86400
+    min_ttl     = "0"
+    default_ttl = "300"  //3600
+    max_ttl     = "1200" //86400
 
     target_origin_id = "origin-bucket-${var.domain}"
 
