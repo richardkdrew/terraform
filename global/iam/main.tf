@@ -2,16 +2,15 @@
 ## Configure the AWS provider for the specific region
 ################################################################################################################
 provider "aws" {
-  alias = "${var.region}"
+  alias  = "${var.region}"
   region = "${var.region}"
 }
-
 
 ################################################################################################################
 ## Configure access to the bucket
 ################################################################################################################
 data "template_file" "deployer_role_policy" {
-  template = "${file("${path.module}/website-deployer-role-policy.json")}"
+  template = "${file("${path.module}/deployer-role-policy.json")}"
 
   vars {
     bucket = "${var.bucket_name}"

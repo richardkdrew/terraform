@@ -9,8 +9,8 @@ provider "aws" {
 ################################################################################################################
 ## Configure the bucket and asset hosting
 ################################################################################################################
-data "template_file" "asset_bucket_policy" {
-  template = "${file("${path.module}/asset-bucket-policy.json")}"
+data "template_file" "assets_bucket_policy" {
+  template = "${file("${path.module}/assets-bucket-policy.json")}"
 
   vars {
     bucket = "${var.bucket_name}"
@@ -18,10 +18,10 @@ data "template_file" "asset_bucket_policy" {
   }
 }
 
-resource "aws_s3_bucket" "asset_bucket" {
+resource "aws_s3_bucket" "assets_bucket" {
   provider = "aws.${var.region}"
   bucket   = "${var.bucket_name}"
-  policy   = "${data.template_file.asset_bucket_policy.rendered}"
+  policy   = "${data.template_file.assets_bucket_policy.rendered}"
 
   tags = "${merge("${var.tags}",map("Name", "${var.project}-${var.bucket_name}", "Environment", "${var.environment}", "Project", "${var.project}"))}"
 }
