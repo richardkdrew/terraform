@@ -1,5 +1,10 @@
 variable acm_certificate_arn {}
 
+variable aliases {
+  description = "Array of aliases for the CloudFront distribution"
+  type        = "list"
+}
+
 variable domain {
   description = "The domain name for the website being hosted, e.g. example.com"
 }
