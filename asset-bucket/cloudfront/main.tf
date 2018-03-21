@@ -15,7 +15,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   price_class  = "PriceClass_All"
   http_version = "http1.1"
 
-  "origin" {
+  origin {
     origin_id   = "origin-bucket-${var.domain}"
     domain_name = "${var.domain}.s3-website-${var.region}.amazonaws.com"
 
@@ -32,9 +32,18 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
-  "default_cache_behavior" {
+  default_cache_behavior {
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
+
+    # Forward (to origin) settings
+    forwarded_values {
+      query_string = true
+
+      cookies {
+        forward = "none"
+      }
+    }
 
     min_ttl     = "0"
     default_ttl = "300"  //3600
@@ -48,15 +57,15 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   # Restrictions for who is able to access this content
-  "restrictions" {
-    "geo_restriction" {
+  restrictions {
+    geo_restriction {
       # type of restriction, blacklist, whitelist or none
       restriction_type = "none"
     }
   }
 
   # SSL certificate for the service.
-  "viewer_certificate" {
+  viewer_certificate {
     acm_certificate_arn      = "${var.acm_certificate_arn}"
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2018"
