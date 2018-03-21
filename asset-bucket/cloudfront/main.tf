@@ -71,5 +71,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     minimum_protocol_version = "TLSv1.2_2018"
   }
 
+  aliases = "${var.aliases}"
+
   tags = "${merge("${var.tags}",map("Name", "${var.project}-${var.domain}", "Environment", "${var.environment}", "Project", "${var.project}"))}"
 }
